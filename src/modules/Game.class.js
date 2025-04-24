@@ -127,19 +127,19 @@ class Game {
   }
 
   existsAvailableMove() {
-    const state = this.state;
+    const { state } = this;
 
-    for (let i = 1; i < state.length - 1; i++) {
-      for (let j = 1; j < state[i].length - 1; j++) {
-        const currentValue = state[i][j];
-        const isAvailableMove =
-          currentValue === 0 ||
-          state[i - 1][j] === currentValue ||
-          state[i + 1][j] === currentValue ||
-          state[i][j - 1] === currentValue ||
-          state[i][j + 1] === currentValue;
+    for (let i = 0; i < state.length; i++) {
+      for (let j = 0; j < state[i].length; j++) {
+        const current = state[i][j];
 
-        if (isAvailableMove) {
+        if (
+          current === 0 ||
+          (i > 0 && state[i - 1][j] === current) ||
+          (i < state.length - 1 && state[i + 1][j] === current) ||
+          (j > 0 && state[i][j - 1] === current) ||
+          (j < state[i].length - 1 && state[i][j + 1] === current)
+        ) {
           return true;
         }
       }

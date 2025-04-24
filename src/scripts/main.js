@@ -9,12 +9,14 @@ const game = new Game();
 document.addEventListener('click', (e) => {
   if (e.target.matches('.restart')) {
     game.restart();
+    updateScore();
 
     return;
   }
 
   if (e.target.matches('.start')) {
     game.start();
+    updateScore();
   }
 });
 
