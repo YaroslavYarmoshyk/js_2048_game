@@ -149,18 +149,23 @@ class Game {
   }
 
   #makeHorizontalMove(operationCallback) {
+    const initialState = structuredClone(this.state);
+
     this.state = this.state.map(operationCallback);
-    this.#addNewNumberToField();
+
+    this.#addNewNumberToFieldIfStateChanged(initialState, this.state);
     this.#updateGameField();
   }
 
   #makeVerticalMove(operationCallback) {
+    const initialState = structuredClone(this.state);
     const transposedMatrix = this.#getTransposedState(this.state);
 
     this.state = this.#getTransposedState(
       transposedMatrix.map(operationCallback),
     );
-    this.#addNewNumberToField();
+
+    this.#addNewNumberToFieldIfStateChanged(initialState, this.state);
     this.#updateGameField();
   }
 
@@ -205,6 +210,12 @@ class Game {
 
   #getEmptyArray() {
     return Array.from({ length: 4 }, () => Array(4).fill(0));
+  }
+
+  #addNewNumberToFieldIfStateChanged(initialState, currentState) {
+    if (JSON.stringify(initialState) !== JSON.stringify(currentState)) {
+      this.#addNewNumberToField();
+    }
   }
 
   #addNewNumberToField() {
